@@ -1,0 +1,68 @@
+﻿@model AspDotNetCoreMVCProject.Models.Student
+
+<h2>Delete Student Information</h2>
+<hr />
+<form asp-action="DeleteConfirm" method="post">
+
+    <div>
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <!--Name Field-->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Enter your name" readonly disabled />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!--Age Field-->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Age" class="form-label"></label>
+            <input asp-for="Age" class="form-control" placeholder="Enter your Age" readonly disabled />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="Enter a valid Email" readonly disabled />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Phone Field-->
+    <div class="row">
+        <div class="col-md-6 mb-2">
+            <label asp-for="Mobile" class="form-label"></label>
+            <input asp-for="Mobile" class="form-control" placeholder="Enter phone number" />
+            <span asp-validation-for="Mobile" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Gender Field-->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Gender</label><br />
+            <div class="form-check form-check-inline">
+                <input type="radio" asp-for="Gender" value="Male" class="form-check-input" readonly disabled />
+                <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" asp-for="Gender" value="Female" class="form-check-input" readonly disabled />
+                <label class="form-check-label">Female</label>
+            </div>
+        </div>
+    </div>
+
+
+
+    <br />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-info">Back To List</a>
+</form>
