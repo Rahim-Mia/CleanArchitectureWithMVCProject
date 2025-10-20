@@ -1,6 +1,7 @@
 ﻿using AspDotNetCoreMVCProject.Data;
 using AspDotNetCoreMVCProject.Models;
 using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,41 +18,41 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public void AddStudent(Student student)
+        public async Task AddStudent(Student student)
         {
-            _context.Students.Add(student);
-            Save();
+            await _context.Students.AddAsync(student);
+            await Save();
         }
 
-        public void DeleteStudent(int id)
+        public async Task DeleteStudent(int id)
         {
-            var student = GetStudentById(id);
+            var student = await GetStudentById(id);
             _context.Students.Remove(student);
-            Save();
+            await Save();
 
         }
 
-        public IEnumerable<Student> GetAllStudents()
+        public async Task<IEnumerable<Student>> GetAllStudents()
         {
-            return _context.Students.ToList();
+            return await _context.Students.ToListAsync();
         }
 
-        public Student GetStudentById(int id)
+        public async Task<Student> GetStudentById(int id)
         {
-            return _context.Students.FirstOrDefault(s => s.Id == id) ?? new Student();
+            return await _context.Students.FirstOrDefaultAsync(s => s.Id == id) ?? new Student();
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Student> SearchStudent(string searchString)
+        public async Task<IEnumerable<Student>> SearchStudent(string searchString)
         {
 
             if (string.IsNullOrWhiteSpace(searchString))
             {
-                return GetAllStudents();
+                return await GetAllStudents();
             }
             bool isAgeSearch = int.TryParse(searchString, out int age);
             var lowerSearchString = searchString.ToLower();
@@ -62,22 +63,20 @@ namespace Infrastructure.Repositories
                      s.Mobile.ToLower().Contains(lowerSearchString) ||
                      s.Gender.ToLower().Contains(lowerSearchString) ||
                      (isAgeSearch && s.Age == age)
-                ).ToList();
-
-            
+                ).ToList();  
 
         }
 
-        public void UpdateStudent(Student student)
+        public async Task UpdateStudent(Student student)
         {
-            var existingStudent = GetStudentById(student.Id);
+            var existingStudent = await GetStudentById(student.Id);
             existingStudent.Name = student.Name;
             existingStudent.Age = student.Age;
             existingStudent.Email = student.Email;
             existingStudent.Mobile = student.Mobile;
             existingStudent.Gender = student.Gender;
 
-            Save();
+            await Save();
 
         }
     }

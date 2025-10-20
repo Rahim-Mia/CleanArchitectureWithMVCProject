@@ -9,13 +9,13 @@ namespace DAL.Interfaces
 {
     public interface IStudentRepository
     {
-        IEnumerable<Student> GetAllStudents();
-        Student GetStudentById(int id);
-        void AddStudent(Student student);
-        void UpdateStudent(Student student);
-        void DeleteStudent(int id);
-        void Save();
-        IEnumerable<Student> SearchStudent(string searchString);
+        Task<IEnumerable<Student>> GetAllStudents();
+        Task<Student> GetStudentById(int id);
+        Task AddStudent(Student student);
+        Task UpdateStudent(Student student);
+        Task DeleteStudent(int id);
+        Task Save();
+        Task<IEnumerable<Student>> SearchStudent(string searchString);
 
     }
 }
