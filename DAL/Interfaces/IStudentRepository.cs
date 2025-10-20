@@ -15,6 +15,7 @@ namespace DAL.Interfaces
         void UpdateStudent(Student student);
         void DeleteStudent(int id);
         void Save();
+        IEnumerable<Student> SearchStudent(string searchString);
 
     }
 }

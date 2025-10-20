@@ -13,10 +13,28 @@ namespace AspDotNetCoreMVCProject.Controllers
             _studentRepository = studentRepository;
         }
 
+        [HttpGet]
+        public IActionResult Search([FromQuery]string searchString)
+        {
+            var students = _studentRepository.SearchStudent(searchString);
+            var result = students.Select(s => new
+            {
+                id = s.Id,
+                name = s.Name,
+                email = s.Email,
+                mobile = s.Mobile,
+                age = s.Age,
+                gender = s.Gender
+            });
 
+            return Json(result);
+            
+        }
         //GET: All Student
         public IActionResult Index()
         {
+
+
             var students = _studentRepository.GetAllStudents();
             return View(students);
         }

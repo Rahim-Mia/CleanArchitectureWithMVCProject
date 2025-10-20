@@ -46,6 +46,28 @@ namespace Infrastructure.Repositories
             _context.SaveChanges();
         }
 
+        public IEnumerable<Student> SearchStudent(string searchString)
+        {
+
+            if (string.IsNullOrWhiteSpace(searchString))
+            {
+                return GetAllStudents();
+            }
+            bool isAgeSearch = int.TryParse(searchString, out int age);
+            var lowerSearchString = searchString.ToLower();
+
+           return _context.Students.Where(
+                s => s.Name.ToLower().Contains(lowerSearchString) ||
+                     s.Email.ToLower().Contains(lowerSearchString) ||
+                     s.Mobile.ToLower().Contains(lowerSearchString) ||
+                     s.Gender.ToLower().Contains(lowerSearchString) ||
+                     (isAgeSearch && s.Age == age)
+                ).ToList();
+
+            
+
+        }
+
         public void UpdateStudent(Student student)
         {
             var existingStudent = GetStudentById(student.Id);
